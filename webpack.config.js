@@ -2,10 +2,13 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
 	mode: 'development',
-	entry: './src/index.js',
+	entry: {
+    page1: './src/page1/index.js',
+    page2: './src/page2/index.js'
+  },
 	output: {
-		path: __dirname + '/dist',
-		filename: 'bundle.js'
+    path: __dirname + '/dist',
+    filename: '[name].js'
 	},
 	module: {
 		rules: [
@@ -29,7 +32,10 @@ module.exports = {
 				}
 			}
 		]
-	},
+  },
+  externals: {
+    jquery: 'jQuery'
+  },
 	optimization: {
 		minimizer: [
 			new UglifyJsPlugin({
