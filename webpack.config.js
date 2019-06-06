@@ -1,5 +1,20 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+function generateHtmls (pageNames = []) {
+  const htmls = []
+
+  pageNames.forEach((name) => {
+    htmls.push(new HtmlWebpackPlugin({
+      template: './src/tpl.html',
+      filename: `${name}.html`,
+      chunks: [`${name}`, 'vendors']
+    }))
+  })
+
+  return htmls
+}
 
 module.exports = {
 	mode: 'development',
@@ -56,13 +71,14 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    ...generateHtmls(['page1', 'page2'])
   ],
 	externals: {
-		jquery: 'jQuery'
+		jquery: 'window.jQuery'
 	},
 	optimization: {
 		splitChunks: {
-			chunks: 'all'
+      chunks: 'all'
 		},
 		minimizer: [
 			new UglifyJsPlugin({

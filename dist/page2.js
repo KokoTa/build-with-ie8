@@ -180,13 +180,13 @@ eval("\n\nvar _jquery = _interopRequireDefault(__webpack_require__(/*! jquery */
 /***/ }),
 
 /***/ "jquery":
-/*!*************************!*\
-  !*** external "jQuery" ***!
-  \*************************/
+/*!********************************!*\
+  !*** external "window.jQuery" ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = jQuery;\n\n//# sourceURL=webpack:///external_%22jQuery%22?");
+eval("module.exports = window.jQuery;\n\n//# sourceURL=webpack:///external_%22window.jQuery%22?");
 
 /***/ })
 
