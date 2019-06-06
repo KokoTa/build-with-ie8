@@ -13,3 +13,7 @@ See [this](https://juejin.im/post/5cabf7b0e51d456e8b07dd04) and [this](https://j
 Remember, IE8 no support Object.defineProperty and babel can't pollyfill all functions for this api, so we can't use Vue or React in IE8
 
 If use jquery, please use under or equal 1.9 version. As we know, CDN is a good way to make us code smaller, so util library like jquery we can use CDN to link program. Also, we need to set webpack config file.
+
+## Notice
+
+If program isn't large, layui maybe a good part.

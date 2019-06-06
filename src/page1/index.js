@@ -1,6 +1,8 @@
 import '@babel/polyfill'
+import _ from 'lodash'
 import cats from './cat'
+import './style.css'
 
-cats.forEach((item) => {
-  console.log(item)
-})
+console.log(cats)
+
+console.log(_.join(['a', 'b', 'c'], '~'))
