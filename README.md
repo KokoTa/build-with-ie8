@@ -14,6 +14,10 @@ Remember, IE8 no support Object.defineProperty and babel can't pollyfill all fun
 
 If use jquery, please use under or equal 1.9 version. As we know, CDN is a good way to make us code smaller, so util library like jquery we can use CDN to link program. Also, we need to set webpack config file.
 
+Lodash can't support IE8.
+
 ## Notice
 
 If program isn't large, layui maybe a good part.
+
+If you want use React in IE8, look anu!

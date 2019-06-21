@@ -1,105 +1,112 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 function generateHtmls(pageNames = []) {
-	const htmls = [];
+  const htmls = [];
 
-	pageNames.forEach((name) => {
-		htmls.push(
-			new HtmlWebpackPlugin({
-				template: './src/tpl.html',
-				filename: `./views/${name}.html`,
-				chunks: [ `${name}`, 'vendors' ]
-			})
-		);
-	});
+  pageNames.forEach((name) => {
+    htmls.push(
+      new HtmlWebpackPlugin({
+        template: './src/tpl.html',
+        filename: `./views/${name}.html`,
+        chunks: [ `${name}`, 'vendors' ]
+      })
+    );
+  });
 
-	return htmls;
+  return htmls;
 }
 
 module.exports = {
-	mode: 'development',
-	entry: {
-		page1: './src/page1/index.js',
-		page2: './src/page2/index.js'
-	},
-	output: {
-		path: __dirname + '/dist',
-		filename: 'js/[name].js'
-	},
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: [
-							[
-								'@babel/preset-env',
-								{
-									loose: true,
-									modules: 'commonjs',
-									useBuiltIns: 'entry'
-								}
-							]
-						]
-					}
-				}
-			},
-			{
-				test: /\.css$/,
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							// you can specify a publicPath here
-							// by default it uses publicPath in webpackOptions.output
-							publicPath: '../',
-							hmr: process.env.NODE_ENV === 'development'
-						}
-					},
-					'css-loader'
-				]
-			},
-			{
-				test: /\.(png|svg|jpg|gif)$/,
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
+  mode: 'development',
+  entry: {
+    page1: './src/page1/index.js',
+    page2: './src/page2/index.js'
+  },
+  output: {
+    path: __dirname + '/dist',
+    filename: 'js/[name].js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  loose: true,
+                  modules: 'commonjs',
+                  useBuiltIns: 'entry'
+                }
+              ]
+            ]
+          }
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // you can specify a publicPath here
+              // by default it uses publicPath in webpackOptions.output
+              publicPath: '../',
+              hmr: process.env.NODE_ENV === 'development'
+            }
+          },
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
               outputPath: 'img',
-							limit: 1
-						}
-					}
-				]
-			}
-		]
-	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			// Options similar to the same options in webpackOptions.output
-			// both options are optional
-			filename: 'css/[name].css',
-			chunkFilename: 'css/[id].css'
-		}),
-		...generateHtmls([ 'page1', 'page2' ])
-	],
-	externals: {
-		jquery: 'window.jQuery'
-	},
-	optimization: {
-		splitChunks: {
-			chunks: 'all'
-		},
-		minimizer: [
-			new UglifyJsPlugin({
-				uglifyOptions: {
-					ie8: true
-				}
-			})
-		]
-	}
+              limit: 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[id].css'
+    }),
+    ...generateHtmls([ 'page1', 'page2' ])
+  ],
+  externals: {
+    jquery: 'window.jQuery'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          ie8: true
+        }
+      })
+    ]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 8080,
+    writeToDisk: true
+  }
 };
