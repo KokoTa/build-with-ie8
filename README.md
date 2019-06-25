@@ -20,4 +20,4 @@ Lodash can't support IE8.
 
 If program isn't large, layui maybe a good part.
 
-If you want use React in IE8, look anu!
+If you want use React in IE8, look [anu](https://github.com/RubyLouvre/anu-ie8-example)!
